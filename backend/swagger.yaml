@@ -1,0 +1,132 @@
+swagger: "2.0"
+info:
+  description: "This is a sample Photos server."
+  version: "1.0.0"
+  title: "Photobook"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "paulo.henrique06@hotmail.com"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: "photos"
+  description: "Everything about register photos"
+schemes:
+- "http"
+- "https"
+paths:
+  /fotos:
+    get:
+      tags:
+      - "photos"
+      summary: "Get all photos"
+      description: ""
+      operationId: "getPhoto"
+      produces:
+      - "application/json"
+      responses:
+        405:
+          description: "Invalid input"
+    post:
+      tags:
+      - "photos"
+      summary: "Add a new photo"
+      description: ""
+      operationId: "addPhoto"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Photo object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Photo"
+      responses:
+        405:
+          description: "Invalid input"
+  /fotos/{id}:
+    get:
+      tags:
+      - "photos"
+      summary: "Get photo by id"
+      description: "Get photo by id"
+      produces:
+      - "application/json"
+      operationId: "getPhotobyId"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Photo to return"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Photo"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Photo not found"
+    put:
+      tags:
+      - "photos"
+      summary: "Update an existing photo"
+      produces:
+      - "application/json"
+      operationId: "updatePhoto"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Photo to return"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Photo object to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Photo"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Photo not found"
+    delete:
+      tags:
+      - "photos"
+      summary: "Deletes a photo"
+      produces:
+      - "application/json"
+      operationId: "deletePhoto"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Photo to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Photo not found"
+definitions:
+  Photo:
+    type: "object"
+    required:
+    - "title"
+    - "url"
+    properties:
+      id:
+        type: "string"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      url:
+        type: "string"
